@@ -1,13 +1,24 @@
 'use client'
 
-import Image from 'next/image';
-import Link from 'next/link';
-import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { useDispatch } from "react-redux";
 import { logoutUser } from "@/store/userSlice";
+import Image from 'next/image';
+import Link from 'next/link';
 
 function NavBar() {
+  const { isLogin } = useSelector((state) => state.user);
+  const router = useRouter();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (isLogin == false) {
+      router.push('/login');
+    }
+  }, [isLogin]);
+
   const [navbar, setNavbar] = useState(false);
   return (
     <div>
@@ -47,11 +58,11 @@ function NavBar() {
               }`}
             >
               <ul className="h-screen md:h-auto items-center justify-center md:flex ">
-                <li className="pb-6 text-xl text-white py-2 px-6 text-center  border-b-2 md:border-b-0  hover:bg-purple-600  border-purple-900  md:hover:text-purple-600 md:hover:bg-transparent">
+                {/* <li className="pb-6 text-xl text-white py-2 px-6 text-center  border-b-2 md:border-b-0  hover:bg-purple-600  border-purple-900  md:hover:text-purple-600 md:hover:bg-transparent">
                   <Link href="/update-user" onClick={() => setNavbar(!navbar)}>
                     Update User
                   </Link>
-                </li>
+                </li> */}
                 <li className="pb-6 text-xl text-white py-2 px-6 text-center  border-b-2 md:border-b-0  hover:bg-purple-600  border-purple-900  md:hover:text-purple-600 md:hover:bg-transparent">
                   <Link href="/change-password" onClick={() => setNavbar(!navbar)}>
                     Change Password

@@ -1,13 +1,10 @@
 "use client";
-
+import { useSelector } from 'react-redux';
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getUser } from "@/store/userSlice";
 import { useRouter } from 'next/navigation';
 import statusCodes from "@/util/StatusCodes";
 
 const Profile = () => {
-  const dispatch = useDispatch();
   const { data: user, status, isLogin } = useSelector((state) => state.user);
   const router = useRouter();
 
@@ -16,12 +13,6 @@ const Profile = () => {
       router.push('/login');
     }
   }, [isLogin]);
-
-  useEffect(() => {
-    // fetchData();
-    // dispatch action for fetch products
-    dispatch(getUser(user.id));
-  }, []);
 
   if (status === statusCodes.LOADING) {
     return <div>Loading ...</div>;
